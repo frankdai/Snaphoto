@@ -1,0 +1,10 @@
+.image-container {
+	max-height: 220px;
+	overflow:hidden;
+}
+.options input[type="file"] {
+	display: none;
+}
+.options input[type="file"] span {
+	visibility: visible;
+}

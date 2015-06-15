@@ -25,8 +25,18 @@ app.init=function() {
 	db.query("SELECT * FROM photos",function(err,rows){
 		data=rows;
 	});
+	exp.use('/photos', express.static('photos'));
+	exp.use('/bower_components', express.static('bower_components'));
+	exp.use('/app', express.static('app'));
 	exp.get("/getphotos",function(req,res){
-		res.json(data);
+		var data=[];
+		db.query("SELECT * FROM photos",function(err,rows){
+			data=rows;
+			res.json(data);
+		});
+	});
+	exp.get("/",function(req,res){
+		res.sendFile('index.html',{root: __dirname});
 	});
 	exp.listen(3030);
 };

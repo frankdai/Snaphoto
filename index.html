@@ -1,0 +1,42 @@
+<html ng-app="snaphoto">
+	<head>
+		<title>Snaphoto Photo Manager</title>
+		<script src="./bower_components/angular/angular.min.js"></script>
+		<script src="./app/script.js"></script>
+		<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css"></link>
+		<link rel="stylesheet" href="./app/style.css"></link>
+	</head>
+	<body ng-controller="snaphotoCtrl">
+		<section class="wrapper container">
+			<header class="header container">
+				<div class="col-sm-1 nav-burger">
+					
+				</div>
+				<div class="col-sm-4 text-center"><h3>Photo Manager</h3></div>
+				<div class="col-sm-4 search-form">
+					<input ng-keyup="search()" type="text" class="form-control" ng-model="keyword" placeholder="Search Photos">
+				</div>
+				<div class="col-sm-3 options">
+					<span class="glyphicon glyphicon glyphicon-sort-by-order" aria-hidden="true" ng-click="arrange(false)"></span>
+					<span class="glyphicon glyphicon glyphicon-sort-by-order-alt" aria-hidden="true" ng-click="arrange(true)"></span>
+					<input type="file"><span class="btn btn-default btn-file">Upload</span></input>
+				</div>
+			</header>
+			<div class="container">
+				<div class="row" ng-repeat="row in data">
+					<div ng-repeat="i in row" class="col-md-4">
+						<div class="image-container">
+							<img ng-src="./photos/{{i.url}}" class="img-responsive" />
+						</div>
+						<p class="text-center">
+							<span ng-hide="i.editModel">{{i.title}}</span>
+							<input ng-model="i.updatedTitle" ng-show="i.editModel" ng-blur="updateTitle(i,i.updatedTitle)" type="text">
+							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(i)"></span>
+						</p>
+						<p class="text-center">{{i.taken_time|timestampFormat}}</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>
