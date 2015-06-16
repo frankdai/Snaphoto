@@ -3,10 +3,12 @@ var ExifImage = require('exif').ExifImage;
 var fs=require("fs");
 var express=require("express");
 var exp=express();
+var bodyParser = require('body-parser')
 var database;
 var app={};
 var data=[];
 var IDCount=1;
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var formatTime=function(input){
 	var year=input.slice(0,4);
 	var month=input.slice(5,7);
@@ -21,18 +23,39 @@ app.install=function(databaseOpt){
 };
 app.init=function() {
 	db.init({password:"2845284frank"});
-	var data=[];
-	db.query("SELECT * FROM photos",function(err,rows){
-		data=rows;
-	});
 	exp.use('/photos', express.static('photos'));
 	exp.use('/bower_components', express.static('bower_components'));
 	exp.use('/app', express.static('app'));
 	exp.get("/getphotos",function(req,res){
-		var data=[];
+		db.init({password:"2845284frank"});
 		db.query("SELECT * FROM photos",function(err,rows){
 			data=rows;
 			res.json(data);
+			
+		});
+		db.end();
+	});
+	exp.use(bodyParser.json()); 
+	exp.put("/edit/:property/:id",function(req,res){
+		var value=req.body.changeTitle;
+		var id=req.params.id;
+		var propery=req.params.property;
+		db.init({password:"2845284frank"});
+		db.query(
+			"UPDATE photos "+
+			"SET "+
+			 propery+"='"+value+"' "+
+			"WHERE ID="+"'"+id+"' "
+			,function(err,rows){
+				if (err) {
+					console.log(err);
+					res.json({"update":"failed"});
+					db.end();
+				}
+				else {
+					res.json({"update":"successful"});
+					db.end();
+				}
 		});
 	});
 	exp.get("/",function(req,res){

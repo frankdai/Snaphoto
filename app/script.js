@@ -1,12 +1,14 @@
-var sp=angular.module("snaphoto",[]);
+var sp=angular.module("snaphoto",["ngAnimate"]);
 sp.filter("timestampFormat",function(){
 	return function (input) {
 		return input.slice(0,10)+" "+input.slice(11,19);
 	};
 });
-sp.controller("snaphotoCtrl",["$scope","$http","$filter","sortData",function($scope,$http,$filter,sortData){
+sp.controller("snaphotoCtrl",["$animate","$scope","$http","$filter","sortData","$timeout",
+function($animate,$scope,$http,$filter,sortData,$timeout){
 	var originalData;
 	var numberPerRows=3;
+	console.log($animate);
 	$http.get("/getphotos").success(function(data){
 		originalData=data;
 		$scope.data=sortData(data,numberPerRows);
@@ -16,13 +18,21 @@ sp.controller("snaphotoCtrl",["$scope","$http","$filter","sortData",function($sc
 		$scope.data=sortData(data,numberPerRows);	
 	};
 	$scope.updateTitle=function(id,title) {
-		id.title=title;
 		$scope.toggleEditModel(id);
+		$http.put("/edit/title/"+id.ID,{changeTitle:id.title});
+	};
+	$scope.updateTitleKeyPress=function(e,id) {
+		if (e.keyCode=="13") {
+			$timeout(function () { e.target.blur(); }, 0, false);
+		}
 	};
 	$scope.search=function(){
 		var key=$scope.keyword;
-		var data=$filter("filter")(originalData,key);
+		var data=$filter("filter")(originalData,{title:key});
 		$scope.data=sortData(data,numberPerRows);	
+	};
+	$scope.toggleEditModel=function(id) {
+		id.editModel=!id.editModel;	
 	};
 }]);
 sp.factory("sortData",function(){

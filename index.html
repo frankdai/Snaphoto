@@ -2,6 +2,7 @@
 	<head>
 		<title>Snaphoto Photo Manager</title>
 		<script src="./bower_components/angular/angular.min.js"></script>
+		<script src="./bower_components/angular-animate/angular-animate.js"></script>
 		<script src="./app/script.js"></script>
 		<link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css"></link>
 		<link rel="stylesheet" href="./app/style.css"></link>
@@ -24,13 +25,11 @@
 			</header>
 			<div class="container">
 				<div class="row" ng-repeat="row in data">
-					<div ng-repeat="i in row" class="col-md-4">
-						<div class="image-container">
-							<img ng-src="./photos/{{i.url}}" class="img-responsive" />
-						</div>
+					<div ng-repeat="i in row" class="image-container col-md-4">
+						<img ng-src="./photos/{{i.url}}" class="img-responsive" />
 						<p class="text-center">
 							<span ng-hide="i.editModel">{{i.title}}</span>
-							<input ng-model="i.updatedTitle" ng-show="i.editModel" ng-blur="updateTitle(i,i.updatedTitle)" type="text">
+							<input ng-model="i.title" ng-show="i.editModel" ng-keydown="updateTitleKeyPress($event,i)" ng-blur="updateTitle(i)" type="text">
 							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(i)"></span>
 						</p>
 						<p class="text-center">{{i.taken_time|timestampFormat}}</p>
