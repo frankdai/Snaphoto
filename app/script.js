@@ -8,14 +8,14 @@ sp.controller("snaphotoCtrl",["$animate","$scope","$http","$filter","sortData","
 function($animate,$scope,$http,$filter,sortData,$timeout){
 	var originalData;
 	var numberPerRows=3;
-	console.log($animate);
 	$http.get("/getphotos").success(function(data){
 		originalData=data;
-		$scope.data=sortData(data,numberPerRows);
+		$scope.data=data;
+		//$scope.data=sortData(data,numberPerRows);
 	});
 	$scope.arrange=function(recentFirst){
-		var data=$filter("orderBy")(originalData,"taken_time",recentFirst);
-		$scope.data=sortData(data,numberPerRows);	
+		$scope.data=$filter("orderBy")(originalData,"taken_time",recentFirst);
+		//$scope.data=sortData(data,numberPerRows);	
 	};
 	$scope.updateTitle=function(id,title) {
 		$scope.toggleEditModel(id);
@@ -28,8 +28,8 @@ function($animate,$scope,$http,$filter,sortData,$timeout){
 	};
 	$scope.search=function(){
 		var key=$scope.keyword;
-		var data=$filter("filter")(originalData,{title:key});
-		$scope.data=sortData(data,numberPerRows);	
+		$scope.data=$filter("filter")(originalData,{title:key});
+		//$scope.data=sortData(data,numberPerRows);	
 	};
 	$scope.toggleEditModel=function(id) {
 		id.editModel=!id.editModel;	

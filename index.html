@@ -24,8 +24,7 @@
 				</div>
 			</header>
 			<div class="container">
-				<div class="row" ng-repeat="row in data">
-					<div ng-repeat="i in row" class="image-container col-md-4">
+					<div ng-repeat="i in data" class="image-container col-md-4">
 						<img ng-src="./photos/{{i.url}}" class="img-responsive" />
 						<p class="text-center">
 							<span ng-hide="i.editModel">{{i.title}}</span>
@@ -34,7 +33,6 @@
 						</p>
 						<p class="text-center">{{i.taken_time|timestampFormat}}</p>
 					</div>
-				</div>
 			</div>
 		</section>
 	</body>

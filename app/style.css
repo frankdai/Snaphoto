@@ -4,21 +4,27 @@
 .options input[type="file"] span {
 	visibility: visible;
 }
-
-.row.ng-leave .image-container{
-  -webkit-transition:all linear 3s;
-  transition:all linear 3s;
-}
-
-.row.animate .image-container {
-  opacity:0;
-  max-height:0;
-}
-
-.row.ng-leave .image-container {
-  opacity:1;
-  max-height:400px;
-}
 .row {
 	overflow:hidden;
+}
+.image-container.ng-enter, .image-container.ng-move {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:0;
+}
+.image-container.ng-enter.ng-enter-active,
+.image-container.ng-move.ng-move-active {
+  opacity:1;
+}
+.image-container.ng-leave {
+  -webkit-animation:0.5s my_animation;
+  -moz-animation:0.5s my_animation;
+  -o-animation:0.5s my_animation;
+  animation:0.5s my_animation;
+}
+@keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
 }
