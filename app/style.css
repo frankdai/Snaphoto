@@ -7,22 +7,21 @@
 .row {
 	overflow:hidden;
 }
-.image-container.ng-enter, .image-container.ng-move {
+.image-container.ng-enter, .image-container.ng-move,.image-container.ng-leave {
   -webkit-transition:0.5s linear all;
   -moz-transition:0.5s linear all;
   -o-transition:0.5s linear all;
   transition:0.5s linear all;
-  opacity:0;
 }
 .image-container.ng-enter.ng-enter-active,
-.image-container.ng-move.ng-move-active {
-  opacity:1;
-}
+.image-container.ng-move.ng-move-active,
 .image-container.ng-leave {
-  -webkit-animation:0.5s my_animation;
-  -moz-animation:0.5s my_animation;
-  -o-animation:0.5s my_animation;
-  animation:0.5s my_animation;
+   opacity: 0
+}
+.image-container.ng-leave.ng-leave-active,
+.image-container.ng-enter, 
+.image-container.ng-move, {
+  opacity: 1
 }
 @keyframes my_animation {
   from { opacity:1; }
