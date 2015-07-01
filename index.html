@@ -24,15 +24,35 @@
 				</div>
 			</header>
 			<div class="container">
-					<div ng-repeat="i in data" class="image-container col-md-4">
-						<img ng-src="./photos/{{i.url}}" class="img-responsive" />
+				<div class="row" ng-repeat="i in data" ng-if="$index%3==0">
+					<div class="image-container col-md-4" ng-if="data[$index]">
+						<img ng-src="./photos/{{data[$index].url}}" class="img-responsive" />
 						<p class="text-center">
-							<span ng-hide="i.editModel">{{i.title}}</span>
-							<input ng-model="i.title" ng-show="i.editModel" ng-keydown="updateTitleKeyPress($event,i)" ng-blur="updateTitle(i)" type="text">
-							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(i)"></span>
+							<span ng-hide="data[$index].editModel">{{data[$index].title}}</span>
+							<input ng-model="data[$index].title" ng-show="data[$index].editModel" ng-keydown="updateTitleKeyPress($event,data[$index])" ng-blur="updateTitle(data[$index])" type="text">
+							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[$index])"></span>
 						</p>
-						<p class="text-center">{{i.taken_time|timestampFormat}}</p>
+						<p class="text-center">{{data[$index].taken_time|timestampFormat}}</p>
 					</div>
+					<div class="image-container col-md-4" ng-if="data[$index+1]">
+						<img ng-src="./photos/{{data[$index+1].url}}" class="img-responsive" />
+						<p class="text-center">
+							<span ng-hide="data[$index+1].editModel">{{data[$index+1].title}}</span>
+							<input ng-model="data[$index+1].title" ng-show="data[$index+1].editModel" ng-keydown="updateTitleKeyPress($event,data[$index+1])" ng-blur="updateTitle(data[$index+1])" type="text">
+							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[$index+1])"></span>
+						</p>
+						<p class="text-center">{{data[$index+1].taken_time|timestampFormat}}</p>
+					</div>
+					<div class="image-container col-md-4" ng-if="data[$index+2]">
+						<img ng-src="./photos/{{data[$index+2].url}}" class="img-responsive" />
+						<p class="text-center">
+							<span ng-hide="data[$index+2].editModel">{{data[$index+2].title}}</span>
+							<input ng-model="data[$index+2].title" ng-show="data[$index+2].editModel" ng-keydown="updateTitleKeyPress($event,data[$index+2])" ng-blur="updateTitle(data[$index+2])" type="text">
+							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[$index+2])"></span>
+						</p>
+						<p class="text-center">{{data[$index+2].taken_time|timestampFormat}}</p>
+					</div>
+				</div>
 			</div>
 		</section>
 	</body>
