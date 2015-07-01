@@ -26,7 +26,7 @@ DB.createTable=function(){
 	db.query(
 		"CREATE TABLE photos ("+
 		"ID int NOT NULL AUTO_INCREMENT,"+ 
-		"taken_time TIMESTAMP,"+ 
+		"taken_time varchar(255),"+ 
 		"maker varchar(255),"+ 
 		"model varchar(255),"+ 
 		"title varchar(255),"+ 

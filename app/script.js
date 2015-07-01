@@ -1,14 +1,18 @@
 var sp=angular.module("snaphoto",["ngAnimate"]);
 sp.filter("timestampFormat",function(){
 	return function (input) {
-		return input.slice(0,10)+" "+input.slice(11,19);
+		if (input&&input.slice) {
+			return input.slice(0,10)+" "+input.slice(11,19);
+		} else {
+			return null;
+		}
 	};
 });
 sp.controller("snaphotoCtrl",["$animate","$scope","$http","$filter","$timeout",
-function($animate,$scope,$http,$filter,sortData,$timeout){
+function($animate,$scope,$http,$filter,$timeout){
 	var originalData;
 	$http.get("/getphotos").success(function(data){
-		$scope.data=data;
+		$scope.data=$filter("orderBy")(data,"ID",true);	
 		originalData=angular.copy(data);
 	});
 	$scope.arrange=function(recentFirst){

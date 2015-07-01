@@ -20,37 +20,22 @@
 				<div class="col-sm-3 options">
 					<span class="glyphicon glyphicon glyphicon-sort-by-order" aria-hidden="true" ng-click="arrange(false)"></span>
 					<span class="glyphicon glyphicon glyphicon-sort-by-order-alt" aria-hidden="true" ng-click="arrange(true)"></span>
-					<input type="file"><span class="btn btn-default btn-file">Upload</span></input>
+					<form id="upload" name="upload" action="/" enctype='multipart/form-data' method="post">
+					<input type="file" id="file" name="file" onchange="document.getElementById('upload').submit()"></input>
+					<span class="btn btn-default btn-file" onclick="document.getElementById('file').click()">Upload</span>
+					</form>
 				</div>
 			</header>
 			<div class="container">
-				<div class="row" ng-repeat="i in data" ng-if="$index%3==0">
-					<div class="image-container col-md-4" ng-if="data[$index]">
-						<img ng-src="./photos/{{data[$index].url}}" class="img-responsive" />
+				<div class="row clearfix" ng-repeat="i in data" ng-if="$index%3==0">
+					<div ng-repeat="idx in [$index,$index+1,$index+2]" class="image-container col-md-4" ng-if="data[idx]">
+						<img ng-src="./photos/{{data[idx].url}}" class="img-responsive" />
 						<p class="text-center">
-							<span ng-hide="data[$index].editModel">{{data[$index].title}}</span>
-							<input ng-model="data[$index].title" ng-show="data[$index].editModel" ng-keydown="updateTitleKeyPress($event,data[$index])" ng-blur="updateTitle(data[$index])" type="text">
-							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[$index])"></span>
+							<span ng-hide="data[idx].editModel">{{data[idx].title}}</span>
+							<input ng-model="data[idx].title" ng-show="data[idx].editModel" ng-keydown="updateTitleKeyPress($event,data[idx])" ng-blur="updateTitle(data[idx])" type="text">
+							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[idx])"></span>
 						</p>
-						<p class="text-center">{{data[$index].taken_time|timestampFormat}}</p>
-					</div>
-					<div class="image-container col-md-4" ng-if="data[$index+1]">
-						<img ng-src="./photos/{{data[$index+1].url}}" class="img-responsive" />
-						<p class="text-center">
-							<span ng-hide="data[$index+1].editModel">{{data[$index+1].title}}</span>
-							<input ng-model="data[$index+1].title" ng-show="data[$index+1].editModel" ng-keydown="updateTitleKeyPress($event,data[$index+1])" ng-blur="updateTitle(data[$index+1])" type="text">
-							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[$index+1])"></span>
-						</p>
-						<p class="text-center">{{data[$index+1].taken_time|timestampFormat}}</p>
-					</div>
-					<div class="image-container col-md-4" ng-if="data[$index+2]">
-						<img ng-src="./photos/{{data[$index+2].url}}" class="img-responsive" />
-						<p class="text-center">
-							<span ng-hide="data[$index+2].editModel">{{data[$index+2].title}}</span>
-							<input ng-model="data[$index+2].title" ng-show="data[$index+2].editModel" ng-keydown="updateTitleKeyPress($event,data[$index+2])" ng-blur="updateTitle(data[$index+2])" type="text">
-							<span class="glyphicon glyphicon-edit" ng-click="toggleEditModel(data[$index+2])"></span>
-						</p>
-						<p class="text-center">{{data[$index+2].taken_time|timestampFormat}}</p>
+						<p class="text-center">{{data[idx].taken_time| date:'medium'}}</p>
 					</div>
 				</div>
 			</div>
